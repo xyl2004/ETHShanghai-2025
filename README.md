@@ -4,14 +4,14 @@
 
 ```mermaid
 graph TD
-    A[了解比赛规则] --> B[Fork官方仓库]
+    A[了解比赛规则] --> B[Fork 官方仓库]
     B --> C[创建项目分支]
     C --> D[开发项目]
     D --> E[填写项目模板]
-    E --> F[录制Demo视频]
+    E --> F[录制 Demo 视频]
     F --> G[部署测试]
     G --> H[最终检查]
-    H --> I[提交PR]
+    H --> I[提交 PR]
     I --> J[等待评审]
 ```
 
@@ -22,7 +22,7 @@ graph TD
 #### 1. 了解比赛规则
 - [ ] 访问 [ETHShanghai 2025 官网](https://ethshanghai.org)
 - [ ] 阅读赛道说明：AI × ETH、DeFi × Infra、公共物品 × 开源建设
-- [ ] 了解评审标准：技术执行35%、创新30%、实用影响15%、用户体验10%、进展10%
+- [ ] 了解评审标准：技术执行 35%、创新 30%、实用影响 15%、用户体验 10%、进展 10%
 - [ ] 确认关键日期：最终提交截止 2025-10-20 24:00（北京时间）
 
 #### 2. Fork 官方仓库
@@ -40,7 +40,7 @@ cd ETHShanghai-2025
 
 #### 3. 创建项目目录
 ```bash
-# 在你的Fork仓库中创建项目目录
+# 在你的 Fork 仓库中创建项目目录
 mkdir projects/[你的团队名]-[项目名]
 cd projects/[你的团队名]-[项目名]
 
@@ -51,7 +51,7 @@ touch README.md
 
 #### 4. 初始化项目
 ```bash
-# 复制官方README模板到你的项目目录
+# 复制官方 README 模板到你的项目目录
 cp ../../README.md ./README.md
 
 # 开始填写项目信息
@@ -64,7 +64,7 @@ cp ../../README.md ./README.md
 - [ ] 实现后端服务（如需要）
 - [ ] 编写测试用例
 
-### 第三阶段：提交准备阶段（截止前1-2天）
+### 第三阶段：提交准备阶段（截止前 1-2 天）
 
 #### 6. 完善项目文档
 按照 README.md 模板填写以下内容：
@@ -103,12 +103,12 @@ cp ../../README.md ./README.md
 
 **方式一：通过 Pull Request**
 ```bash
-# 在你的Fork仓库中提交更改
+# 在你的 Fork 仓库中提交更改
 git add .
 git commit -m "Add project: [项目名称]"
 git push origin main
 
-# 在GitHub上创建Pull Request到官方仓库
+# 在 GitHub 上创建 Pull Request 到官方仓库
 ```
 
 **方式二：在官方目录创建项目**
@@ -119,67 +119,16 @@ git push origin main
 
 #### 11. 提交登记
 - [ ] 在比赛官网完成项目登记
-- [ ] 填写项目链接和Demo视频链接
+- [ ] 填写项目链接和 Demo 视频链接
 - [ ] 确认提交状态
 
-## 📁 推荐的项目目录结构
-
-```
-projects/[团队名]-[项目名]/
-├─ contracts/                 # 智能合约
-│  ├─ src/
-│  ├─ test/
-│  ├─ script/
-│  └─ foundry.toml
-├─ frontend/                  # 前端应用
-│  ├─ src/
-│  ├─ public/
-│  ├─ package.json
-│  └─ .env.local
-├─ backend/                   # 后端服务
-│  ├─ src/
-│  ├─ package.json
-│  └─ .env
-├─ deployments/               # 部署记录
-│  ├─ contracts.json         # 合约地址记录
-│  └─ deployment.log         # 部署日志
-├─ scripts/                   # 脚本工具
-│  ├─ deploy.js              # 部署脚本
-│  └─ test.js                # 测试脚本
-├─ docs/                      # 项目文档
-│  ├─ architecture.md        # 架构文档
-│  ├─ api.md                 # API文档
-│  └─ user-guide.md          # 用户指南
-├─ README.md                  # 项目说明（必填）
-└─ .gitignore
-```
-
-## 🔧 技术栈建议
-
-### 智能合约开发
-- **框架**: Foundry, Hardhat, Truffle
-- **语言**: Solidity
-- **测试**: Foundry Test, Waffle, Mocha
-- **网络**: Sepolia, Goerli, Polygon Mumbai
-
-### 前端开发
-- **框架**: React, Next.js, Vue.js
-- **Web3**: ethers.js, web3.js, wagmi
-- **UI**: Tailwind CSS, Material-UI, Ant Design
-- **钱包**: MetaMask, WalletConnect
-
-### 后端开发
-- **语言**: Node.js, Python, Go
-- **框架**: Express, FastAPI, Gin
-- **数据库**: PostgreSQL, MongoDB, Redis
-- **部署**: Vercel, Railway, Heroku
 
 ## 📝 提交材料清单
 
 ### 必需材料
 - [ ] 完整的项目代码
 - [ ] 填写完整的 README.md
-- [ ] Demo 视频（≤3分钟，中文）
+- [ ] Demo 视频（≤3 分钟，中文）
 - [ ] 项目 GitHub 链接
 
 ### 可选材料
@@ -196,12 +145,6 @@ projects/[团队名]-[项目名]/
 4. **时间**: 严格按时提交，逾期不候
 5. **质量**: 确保代码质量和文档完整性
 
-## 📞 技术支持
-
-如遇到技术问题，可通过以下方式获取帮助：
-- GitHub Issues: 在官方仓库提交问题
-- 官方微信群: 加入比赛官方交流群
-- 邮件支持: 联系主办方技术支持邮箱
 
 ## 🎯 评分标准提醒
 
