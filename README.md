@@ -101,7 +101,6 @@ cp ../../README.md ./README.md
 
 #### 10. 提交到官方仓库
 
-**方式一：通过 Pull Request**
 ```bash
 # 在你的 Fork 仓库中提交更改
 git add .
@@ -111,11 +110,6 @@ git push origin main
 # 在 GitHub 上创建 Pull Request 到官方仓库
 ```
 
-**方式二：在官方目录创建项目**
-```bash
-# 联系主办方获取提交权限
-# 在官方仓库的 projects/ 目录下创建你的项目文件夹
-```
 
 #### 11. 提交登记
 - [ ] 在比赛官网完成项目登记
