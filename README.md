@@ -113,6 +113,12 @@ pnpm -C frontend dev
 
 ## 五、提交流程 (How to Submit)
 
+### 快速开始
+1. **查看详细指南**: [📖 参赛选手操作流程指南](SUBMISSION_WORKFLOW.md)
+2. **项目快速设置**: [🚀 项目快速开始指南](PROJECT_SETUP.md)
+3. **使用项目模板**: 复制 `projects/template-project/` 作为你的项目起点
+
+### 提交步骤
 1) Fork 官方 Repo 或在官方提交目录下创建你的项目目录
 2) 完成代码与本 README 填写，确保本地可跑通
 3) 推送到 GitHub，并在仓库首页显著位置附上 Demo 视频与在线链接
