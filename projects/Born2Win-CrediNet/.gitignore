@@ -1,0 +1,11 @@
+**/node_modules/
+**/target/
+**/.DS_Store/
+**/.idea/
+**/__MACOSX
+**/artifacts/
+**/cache/
+**/dist/
+**/.env
+**/credinet.db
+**/.openzeppelin/
