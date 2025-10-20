@@ -1,0 +1,290 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Asset {
+  name            String
+  issuer          String
+  type            String
+  rating          String?
+  chain           String         @default("Sepolia")
+  maturity        DateTime?
+  duration        Decimal?       @default(0) @db.Decimal(10, 2)
+  assetId         String         @id
+  aqTokenAddress  String         @map("aq_token_address")
+  pTokenAddress   String         @map("p_token_address")
+  cTokenAddress   String         @map("c_token_address")
+  sTokenAddress   String         @map("s_token_address")
+  tvl             Decimal        @default(0) @db.Decimal(18, 8)
+  vol24h          Decimal        @default(0) @db.Decimal(18, 8)
+  cApr            Decimal        @default(0) @map("c_apr") @db.Decimal(8, 4)
+  lcr             Decimal        @default(1) @db.Decimal(8, 4)
+  nav             Decimal        @default(100) @db.Decimal(10, 2)
+  discountP       Decimal        @default(0) @map("discount_p") @db.Decimal(8, 4)
+  couponRate      Decimal        @default(0) @map("coupon_rate") @db.Decimal(8, 4)
+  shareToS        Decimal        @default(0) @map("share_to_s") @db.Decimal(8, 4)
+  rewards         Json           @default("[]")
+  isNew           Boolean        @default(false) @map("is_new")
+  isActive        Boolean        @default(true) @map("is_active")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+  rwaTokenAddress String         @map("rwa_token_address")
+  tvl24h          Decimal        @default(0) @db.Decimal(18, 8)
+  baseTvl         Decimal        @default(0) @map("base_tvl") @db.Decimal(18, 8)
+  baseTvl24h      Decimal        @default(0) @map("base_tvl_24h") @db.Decimal(18, 8)
+  liquidityTvl    Decimal        @default(0) @map("liquidity_tvl") @db.Decimal(18, 8)
+  liquidityTvl24h Decimal        @default(0) @map("liquidity_tvl_24h") @db.Decimal(18, 8)
+  pApr            Decimal        @default(0) @map("p_apr") @db.Decimal(8, 4)
+  sApr            Decimal        @default(0) @map("s_apr") @db.Decimal(8, 4)
+  sAprRange       Json           @default("[0, 0]") @map("s_apr_range")
+  assetDetail     AssetDetail?
+  priceHistory    PriceHistory[]
+  volumeHistory   AssetVolumeHistory[]
+
+  @@index([type])
+  @@index([rating])
+  @@index([chain])
+  @@index([maturity])
+  @@index([isActive])
+  @@index([createdAt])
+  @@index([tvl, createdAt])
+  @@index([isActive, aqTokenAddress])
+  @@index([updatedAt])
+  @@map("assets")
+}
+
+model AssetDetail {
+  id              String   @id @default(cuid())
+  assetId         String   @unique @map("asset_id")
+  richTextContent String   @map("rich_text_content")
+  contentType     String   @default("html") @map("content_type")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  asset           Asset    @relation(fields: [assetId], references: [assetId], onDelete: Cascade)
+
+  @@index([assetId])
+  @@map("asset_details")
+}
+
+model PriceHistory {
+  id               String   @id @default(cuid())
+  assetId          String   @map("asset_id")
+  nav              Decimal  @db.Decimal(10, 2)
+  discountP        Decimal  @map("discount_p") @db.Decimal(8, 4)
+  pPrice           Decimal? @map("p_price") @db.Decimal(18, 8)
+  cPrice           Decimal? @map("c_price") @db.Decimal(18, 8)
+  sPrice           Decimal? @map("s_price") @db.Decimal(18, 8)
+  pApr             Decimal? @map("p_apr") @db.Decimal(8, 4)
+  cApr             Decimal? @map("c_apr") @db.Decimal(8, 4)
+  sApr             Decimal? @map("s_apr") @db.Decimal(8, 4)
+  tvl              Decimal? @db.Decimal(18, 8)
+  volume24h        Decimal? @map("volume_24h") @db.Decimal(18, 8)
+  timestamp        DateTime @default(now())
+  createdAt        DateTime @default(now()) @map("created_at")
+  aqPrice          Decimal? @map("aq_price") @db.Decimal(18, 8)
+  dataSource       String   @default("uniswap") @map("data_source")
+  ethPrice         Decimal? @map("eth_price") @db.Decimal(18, 8)
+  network          String   @default("sepolia")
+  priceChangeAq24h Decimal? @map("price_change_aq_24h") @db.Decimal(8, 4)
+  priceChangeC24h  Decimal? @map("price_change_c_24h") @db.Decimal(8, 4)
+  priceChangeP24h  Decimal? @map("price_change_p_24h") @db.Decimal(8, 4)
+  priceChangeS24h  Decimal? @map("price_change_s_24h") @db.Decimal(8, 4)
+  updateType       String   @default("scheduled") @map("update_type")
+  asset            Asset    @relation(fields: [assetId], references: [assetId], onDelete: Cascade)
+
+  @@index([assetId, timestamp])
+  @@index([timestamp])
+  @@index([network, timestamp])
+  @@index([dataSource, timestamp])
+  @@map("price_history")
+}
+
+model RWAAssetPriceCache {
+  id          String   @id @default(cuid())
+  assetId     String   @map("asset_id")
+  symbol      String
+  price       String   @db.VarChar(50)
+  currency    String   @default("USD")
+  source      String
+  lastUpdated DateTime @map("last_updated")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([assetId, lastUpdated])
+  @@index([symbol])
+  @@index([lastUpdated])
+  @@map("rwa_asset_price_cache")
+}
+
+model AQTokenBalanceCache {
+  id             String   @id @default(cuid())
+  assetId        String   @map("asset_id")
+  aqTokenAddress String   @map("aq_token_address")
+  balance        String   @db.VarChar(50)
+  decimals       Int      @default(18)
+  blockNumber    Int?     @map("block_number")
+  lastUpdated    DateTime @map("last_updated")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@index([assetId, lastUpdated])
+  @@index([aqTokenAddress])
+  @@index([lastUpdated])
+  @@map("aq_token_balance_cache")
+}
+
+model TVLSnapshot {
+  id         String   @id @default(cuid())
+  totalTVL   String   @map("total_tvl") @db.VarChar(50)
+  assetCount Int      @map("asset_count")
+  timestamp  DateTime
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@index([timestamp])
+  @@map("tvl_snapshots")
+}
+
+model LiquidityTVLCache {
+  id                  String   @id @default(cuid())
+  assetId             String   @map("asset_id")
+  pTokenAddress       String?  @map("p_token_address")
+  pTokenAmount        String?  @map("p_token_amount") @db.VarChar(50)
+  pTokenPrice         String?  @map("p_token_price") @db.VarChar(50)
+  pTokenValue         String?  @map("p_token_value") @db.VarChar(50)
+  pStablecoinAmount   String?  @map("p_stablecoin_amount") @db.VarChar(50)
+  pPoolId             String?  @map("p_pool_id")
+  // P Token USDT Pool
+  pTokenUsdtAmount        String?  @map("p_token_usdt_amount") @db.VarChar(50)
+  pTokenUsdtValue         String?  @map("p_token_usdt_value") @db.VarChar(50)
+  pTokenUsdtStablecoinAmount String? @map("p_token_usdt_stablecoin_amount") @db.VarChar(50)
+  pTokenUsdtPoolId        String?  @map("p_token_usdt_pool_id")
+  // P Token USDC Pool
+  pTokenUsdcAmount        String?  @map("p_token_usdc_amount") @db.VarChar(50)
+  pTokenUsdcValue         String?  @map("p_token_usdc_value") @db.VarChar(50)
+  pTokenUsdcStablecoinAmount String? @map("p_token_usdc_stablecoin_amount") @db.VarChar(50)
+  pTokenUsdcPoolId        String?  @map("p_token_usdc_pool_id")
+  cTokenAddress       String?  @map("c_token_address")
+  cTokenAmount        String?  @map("c_token_amount") @db.VarChar(50)
+  cTokenPrice         String?  @map("c_token_price") @db.VarChar(50)
+  cTokenValue         String?  @map("c_token_value") @db.VarChar(50)
+  cStablecoinAmount   String?  @map("c_stablecoin_amount") @db.VarChar(50)
+  cPoolId             String?  @map("c_pool_id")
+  // C Token USDT Pool
+  cTokenUsdtAmount        String?  @map("c_token_usdt_amount") @db.VarChar(50)
+  cTokenUsdtValue         String?  @map("c_token_usdt_value") @db.VarChar(50)
+  cTokenUsdtStablecoinAmount String? @map("c_token_usdt_stablecoin_amount") @db.VarChar(50)
+  cTokenUsdtPoolId        String?  @map("c_token_usdt_pool_id")
+  // C Token USDC Pool
+  cTokenUsdcAmount        String?  @map("c_token_usdc_amount") @db.VarChar(50)
+  cTokenUsdcValue         String?  @map("c_token_usdc_value") @db.VarChar(50)
+  cTokenUsdcStablecoinAmount String? @map("c_token_usdc_stablecoin_amount") @db.VarChar(50)
+  cTokenUsdcPoolId        String?  @map("c_token_usdc_pool_id")
+  sTokenAddress       String?  @map("s_token_address")
+  sTokenAmount        String?  @map("s_token_amount") @db.VarChar(50)
+  sTokenPrice         String?  @map("s_token_price") @db.VarChar(50)
+  sTokenValue         String?  @map("s_token_value") @db.VarChar(50)
+  sStablecoinAmount   String?  @map("s_stablecoin_amount") @db.VarChar(50)
+  sPoolId             String?  @map("s_pool_id")
+  // S Token USDT Pool
+  sTokenUsdtAmount        String?  @map("s_token_usdt_amount") @db.VarChar(50)
+  sTokenUsdtValue         String?  @map("s_token_usdt_value") @db.VarChar(50)
+  sTokenUsdtStablecoinAmount String? @map("s_token_usdt_stablecoin_amount") @db.VarChar(50)
+  sTokenUsdtPoolId        String?  @map("s_token_usdt_pool_id")
+  // S Token USDC Pool
+  sTokenUsdcAmount        String?  @map("s_token_usdc_amount") @db.VarChar(50)
+  sTokenUsdcValue         String?  @map("s_token_usdc_value") @db.VarChar(50)
+  sTokenUsdcStablecoinAmount String? @map("s_token_usdc_stablecoin_amount") @db.VarChar(50)
+  sTokenUsdcPoolId        String?  @map("s_token_usdc_pool_id")
+  totalLiquidityValue String   @map("total_liquidity_value") @db.VarChar(50)
+  dataSource          String   @default("subgraph") @map("data_source")
+  lastUpdated         DateTime @map("last_updated")
+  createdAt           DateTime @default(now()) @map("created_at")
+
+  @@index([assetId, lastUpdated])
+  @@index([lastUpdated])
+  @@map("liquidity_tvl_cache")
+}
+
+model AssetTVLSnapshot {
+  id              String   @id @default(cuid())
+  assetId         String   @map("asset_id")
+  tvlUSD          String   @map("tvl_usd") @db.VarChar(50)
+  aqTokenBalance  String   @map("aq_token_balance") @db.VarChar(50)
+  rwaPriceUSD     String   @map("rwa_price_usd") @db.VarChar(50)
+  timestamp       DateTime
+  createdAt       DateTime @default(now()) @map("created_at")
+  baseTvlUSD      String   @default("0") @map("base_tvl_usd") @db.VarChar(50)
+  cTokenLiquidity String?  @map("c_token_liquidity") @db.VarChar(50)
+  liquidityTvlUSD String   @default("0") @map("liquidity_tvl_usd") @db.VarChar(50)
+  pTokenLiquidity String?  @map("p_token_liquidity") @db.VarChar(50)
+  sTokenLiquidity String?  @map("s_token_liquidity") @db.VarChar(50)
+
+  @@index([assetId, timestamp])
+  @@index([timestamp])
+  @@map("asset_tvl_snapshots")
+}
+
+model AssetVolumeHistory {
+  id                    String   @id @default(cuid())
+  assetId               String   @map("asset_id")
+  
+  // P token 交易量
+  pTokenUsdcVolume24h   Decimal  @default(0) @map("p_token_usdc_volume_24h") @db.Decimal(18, 8)
+  pTokenUsdtVolume24h   Decimal  @default(0) @map("p_token_usdt_volume_24h") @db.Decimal(18, 8)
+  pTokenTotalVolume24h  Decimal  @default(0) @map("p_token_total_volume_24h") @db.Decimal(18, 8)
+  
+  // C token 交易量
+  cTokenUsdcVolume24h   Decimal  @default(0) @map("c_token_usdc_volume_24h") @db.Decimal(18, 8)
+  cTokenUsdtVolume24h   Decimal  @default(0) @map("c_token_usdt_volume_24h") @db.Decimal(18, 8)
+  cTokenTotalVolume24h  Decimal  @default(0) @map("c_token_total_volume_24h") @db.Decimal(18, 8)
+  
+  // S token 交易量
+  sTokenUsdcVolume24h   Decimal  @default(0) @map("s_token_usdc_volume_24h") @db.Decimal(18, 8)
+  sTokenUsdtVolume24h   Decimal  @default(0) @map("s_token_usdt_volume_24h") @db.Decimal(18, 8)
+  sTokenTotalVolume24h  Decimal  @default(0) @map("s_token_total_volume_24h") @db.Decimal(18, 8)
+  
+  // 汇总数据
+  totalUsdcVolume24h    Decimal  @default(0) @map("total_usdc_volume_24h") @db.Decimal(18, 8)
+  totalUsdtVolume24h    Decimal  @default(0) @map("total_usdt_volume_24h") @db.Decimal(18, 8)
+  totalVolume24h        Decimal  @default(0) @map("total_volume_24h") @db.Decimal(18, 8)
+  
+  // 数据来源和时间
+  dataSource            String   @default("subgraph") @map("data_source")
+  network               String   @default("sepolia")
+  timestamp             DateTime @default(now())
+  createdAt             DateTime @default(now()) @map("created_at")
+  
+  // 关联关系
+  asset                 Asset    @relation(fields: [assetId], references: [assetId], onDelete: Cascade)
+  
+  @@index([assetId, timestamp])
+  @@index([timestamp])
+  @@index([network, timestamp])
+  @@map("asset_volume_history")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+}

@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "proteinfolddao"
+version = "1.0.0"
+description = "去中心化蛋白折叠预测DAO"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ai*", "ui*", "tests*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.txt", "*.md", "*.json"]
