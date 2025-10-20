@@ -250,6 +250,30 @@ cargo run --bin api_gateway &
 ./smart_dependency_manager.sh
 ```
 
+## 🎬 演示视频
+
+### 📹 Demo.mov - EchokitBot 租赁平台演示
+
+**完整功能演示视频现已发布！**
+
+📥 **下载地址**: [Demo.mov - GitHub Release](https://github.com/LiyanJin/ETHShanghai-2025/releases/latest/download/Demo.mov)
+
+**演示内容包括：**
+- 🤖 AI 智能合约生成器实时演示
+- 🔗 多链部署和 NFT 代币化流程
+- 💰 多币种支付和租赁管理
+- 🛡️ 安全审计和代码优化过程
+- 🌐 OpenAI 兼容 API 调用示例
+- 📱 完整的用户交互界面
+
+**视频规格：**
+- 📊 文件大小：103MB
+- ⏱️ 时长：约 8-10 分钟
+- 🎥 格式：MOV (H.264)
+- 📱 分辨率：高清 1080p
+
+> 💡 **提示**: 由于文件较大，建议在良好的网络环境下下载。视频展示了平台的核心功能和真实 LLM 集成效果。
+
 ## 📚 使用指南
 
 ### 🎯 基础使用
