@@ -1,0 +1,4 @@
+[
+  { "name": "首页", "path": "/" },
+  { "name": "我的Agent", "path": "/my" }
+]
