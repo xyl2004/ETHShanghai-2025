@@ -149,10 +149,10 @@ cd frontend && pnpm dev
 
 - **团队名**：LightCommit Team
 - **成员与分工**：
-  - Frederick - 前端 
-  - 散修Sacultor - 后端 
-  - 燕耳Firenze - 合约 
-  - 冷酷小猫 - 全栈 
+  - Frederick - 全栈(干) 
+  - 散修Sacultor - 全栈(干)
+  - 燕耳Firenze - 全栈(干)
+  - 冷酷小猫 - 全栈(干)
 - **联系方式（Email/TG/X）**：2313072@mail.nankai.edu.cn
 - **可演示时段（时区）**：下午均可
 
