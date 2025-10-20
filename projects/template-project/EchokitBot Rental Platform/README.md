@@ -1,4 +1,4 @@
-# 🤖 EchokitBot Blockchain Rental Platform
+# 🤖 EchokitBot Rental Platform
 
 **🚀 AI-Powered Multi-Agent Smart Contract Generator with Real LLM Integration**
 
@@ -256,7 +256,7 @@ cargo run --bin api_gateway &
 
 **完整功能演示视频现已发布！**
 
-📥 **下载地址**: [Demo.mov - GitHub Release](https://github.com/LiyanJin/ETHShanghai-2025/releases/latest/download/Demo.mov)
+📥 **下载地址**: (https://pan.baidu.com/s/1jtH_ynZfQBl3PCD9P1kpYA 提取码: 2026)
 
 **演示内容包括：**
 - 🤖 AI 智能合约生成器实时演示
@@ -266,13 +266,7 @@ cargo run --bin api_gateway &
 - 🌐 OpenAI 兼容 API 调用示例
 - 📱 完整的用户交互界面
 
-**视频规格：**
-- 📊 文件大小：103MB
-- ⏱️ 时长：约 8-10 分钟
-- 🎥 格式：MOV (H.264)
-- 📱 分辨率：高清 1080p
-
-> 💡 **提示**: 由于文件较大，建议在良好的网络环境下下载。视频展示了平台的核心功能和真实 LLM 集成效果。
+视频展示了平台的核心功能和真实 LLM 集成效果。
 
 ## 📚 使用指南
 
